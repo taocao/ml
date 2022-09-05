@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Best practices when programming a deep learning model | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Best practices when programming a deep learning model" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A tutorial for best practices when programming a deep learning model." />
+<meta property="og:description" content="A tutorial for best practices when programming a deep learning model." />
+<link rel="canonical" href="https://taocao.github.io/ml/jupyter/2022/09/04/best-practices-ML-programming.html" />
+<meta property="og:url" content="https://taocao.github.io/ml/jupyter/2022/09/04/best-practices-ML-programming.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:image" content="https://taocao.github.io/ml/images/chart-preview.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-09-04T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://taocao.github.io/ml/images/chart-preview.png" />
+<meta property="twitter:title" content="Best practices when programming a deep learning model" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-04T00:00:00-05:00","datePublished":"2022-09-04T00:00:00-05:00","description":"A tutorial for best practices when programming a deep learning model.","headline":"Best practices when programming a deep learning model","image":"https://taocao.github.io/ml/images/chart-preview.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://taocao.github.io/ml/jupyter/2022/09/04/best-practices-ML-programming.html"},"url":"https://taocao.github.io/ml/jupyter/2022/09/04/best-practices-ML-programming.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/ml/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://taocao.github.io/ml/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/ml/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/ml/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/ml/about/">About Me</a><a class="page-link" href="/ml/search/">Search</a><a class="page-link" href="/ml/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Best practices when programming a deep learning model</h1><p class="page-description">A tutorial for best practices when programming a deep learning model.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-04T00:00:00-05:00" itemprop="datePublished">
+        Sep 4, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/ml/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/taocao/ml/tree/master/_notebooks/best-practices-ML-programming.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/ml/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/taocao/ml/master?filepath=_notebooks%2Fbest-practices-ML-programming.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/ml/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/taocao/ml/blob/master/_notebooks/best-practices-ML-programming.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/ml/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Ftaocao%2Fml%2Fblob%2Fmaster%2F_notebooks%2Fbest-practices-ML-programming.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/ml/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/best-practices-ML-programming.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>best practices when programming a deep learning model. These practices mostly refer to how we can write organized, modularized, and extensible python code.</p>
+<p>Most of them aren’t exclusive for machine learning applications but can be utilized on all sorts of python projects. But here we will see how we can apply them in deep learning using a hands-on programming approach.</p>
+<p>Machine learning code is ordinary software and should always be treated as one. Therefore, as ordinary code it has a project structure, a documentation and design principles such as object-oriented programming.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Devops for ML
+“This key chapter puts the “engineering” in data engineering. DevOps practices allow us to build reliable, reproducible systems. One of the principles you will see repeated throughout the book is tracking everything in source control and deploying everything automatically.”</p>
+<p>Excerpt From
+Data Engineering on Azure Riscutia, Vlad;</p>
+<p>===== <a href="https://theaisummer.com/deep-learning-production/">https://theaisummer.com/deep-learning-production/</a></p>
+<p>It’s time. You spent hours reading research papers, experimenting on different data, testing the accuracy of different models but you got it. After training your model locally, you’ve seen some pretty awesome results and you’re convinced that your model is ready to go. What’s next?
+The next step is to take your experimentation code and migrate it into an actual python project with proper structure, unit tests, static code analysis, parallel processing etc.</p>
+<p>In terms of software, the flow is something like this: the user uploads the image to the browser, the browser sends the image to our backend, the UNet predicts the segmented image and we send the image back to the user’s browser, where it is rendered.</p>
+<p>￼
+After watching the above system, there are many questions that come in our mind:</p>
+<ul>
+<li>What will happen if many users ask the model at the same time?</li>
+<li>What will happen if for some reason the model crashes?</li>
+<li>If it contains a bug we haven’t previously seen?</li>
+<li>If the model is too slow and the user has to wait for too long to get a response?</li>
+<li>And how can we update our model?</li>
+<li>Can we retrain it on new data?</li>
+<li>Can we get some feedback if the model performs well?</li>
+<li>Can we see how fast or slow the model is?</li>
+<li>How much memory does it use?</li>
+<li>Where do we store the model weights?</li>
+<li>What about the training data?</li>
+<li>What if the user sends a malicious request instead of a proper image?</li>
+</ul>
+<p>I can go on forever but I’m sure you get my point. Most of these questions will be answered in the following articles. That’s why in most real-life cases, the final architecture will be something like this:</p>
+<p>￼</p>
+<p>Ok, we won’t go that far. That’s a whole startup up there. But we will cover many points focusing on optimizing the software at first and touching some of these parts on our latest articles.</p>
+<p>Software design principles
+But to develop our software, we need to have in mind a rough idea of our end goal and what we want to achieve. Every system should be built based on some basic principles:</p>
+<ul>
+<li>Separation of concerns: The system should be modularized into different components with each component being a separate maintainable, reusable and extensible entity.</li>
+<li>Scalability: The system needs to be able to scale as the traffic increases</li>
+<li>Reliability: The system should continue to be functional even if there is software of hardware failure</li>
+<li>Availability: The system needs to continue operating at all times</li>
+<li>Simplicity: The system has to be as simple and intuitive as possible
+Given the aforementioned principles, let’s discuss the above image:
+Each user sends a request to our backend. To be able to handle all the simultaneous requests, first we need a Load Balancer (LB) to handle the traffic and route the requests to the proper server instance.
+We maintain more than one instance of the model in order to achieve both scalability and availability. Note that these might be physical instances, virtual machines or docker containers and they are organized by a distributed system orchestrator (such as Kubernetes)
+As you can probably see, each instance may have more than one threads or parallel processes. We need that to make sure that the model is fast enough to return a response in real time.
+A major problem most machine learning systems face is retraining because in order for the model to stay up to date, you should constantly update the model weights based on the new data. In our case, this pipeline consists of:</li>
+<li>A database (DB) to save the requests, the responses and all relative data</li>
+<li>A message queue (MQ) to send them in the database in an asynchronous manner ( to keep the system reliable and available)</li>
+<li>Data jobs to preprocess and transform the data in the correct format so that can be used from our model</li>
+<li>Retrainer instances that execute the actual training based on the saved data</li>
+</ul>
+<p>After retraining the model, the new version will gradually replace all the UNet instances. That way we build deep learning models versioning functionality, where we always update the model with the newest version.
+(Really? In this case, we need to make sure the newest version is the best, how ?)</p>
+<p>Finally, we need some sort of monitoring and logging to have a complete image of what’s happening in our system, to catch errors quickly and to discover bottlenecks easily.</p>
+<p>Get ready for Software Engineering</p>
+<ol>
+<li>understand the whys of a modern deep learning system.</li>
+</ol>
+<p>The second one requires some mental effort because deep learning architectures are rather complex systems. But the main thing that you need to remember are the 5 principles as they will accompany us down the road.
+We are all set up and ready to begin our journey towards deploying our UNet model and serve it to our users. As I said in the beginning, brace yourself to go deep into programming deep learning apps, to dive into details that you probably never thought of and most of all to enjoy the process.</p>
+<p><a href="https://github.com/donnemartin/system-design-primer">https://github.com/donnemartin/system-design-primer</a></p>
+<p><a href="https://theaisummer.com/best-practices-deep-learning-code/">https://theaisummer.com/best-practices-deep-learning-code/</a></p>
+<p>Project Structure
+One very important aspect when writing code is how you structure your project. A good structure should obey the “Separation of concerns” principle in terms that each functionality should be a distinct component. In this way, it can be easily modified and extended without breaking other parts of the code. Moreover, it can also be reused in many places without the need to write duplicate code.</p>
+<p>The way I like to organize most of my deep learning projects is something like this :</p>
+<p>￼</p>
+<p>And that, of course, is my personal preference. Feel free to play around with this until you find what suits you best.</p>
+<p>Python modules and packages</p>
+<p>Notice that in the project structure that I presented, each folder is a separate module that can be imported in other modules just by doing “import module”. Here, we should make a quick distinction between what python calls module and what package. A module is simply a file containing Python code. A package, however, is like a directory that holds sub-packages and modules. In order for a package to be importable, it should contain a init.py file ( even if it’s empty). That’s not the case for modules. Thus, in our case each folder is a package and it contains an “init” file.</p>
+<p>In our example, we have 8 different packages:</p>
+<ol>
+<li>configs: in configs we define every single thing that can be configurable and can be changed in the future. Good examples are training hyperparameters, folder paths, the model architecture, metrics, flags.
+A very simple config is something like this:
+CFG = {
+"data": {
+<pre><code>"path": "oxford_iiit_pet:3.*.*",
+"image_size": 128,
+"load_with_info": True
+</code></pre>
+},
+"train": {
+<pre><code>"batch_size": 64,
+"buffer_size": 1000,
+"epoches": 20,
+"val_subsplits": 5,
+"optimizer": {
+    "type": "adam"
+},
+"metrics": ["accuracy"]
+</code></pre>
+},
+"model": {
+<pre><code>"input": [128, 128, 3],
+"up_stack": {
+    "layer_1": 512,
+    "layer_2": 256,
+    "layer_3": 128,
+    "layer_4": 64,
+    "kernels": 3
+},
+"output": 3
+</code></pre>
+}
+}</li>
+<li>dataloader is quite self-explanatory. All the data loading and data preprocessing classes and functions live here.</li>
+<li>evaluation is a collection of code that aims to evaluate the performance and accuracy of our model.</li>
+<li>executor: in this folder, we usually have all the functions and scripts that train the model or use it to predict something in different environments. And by different environments I mean: executors for GPUs, executors for distributed systems. This package is our connection with the outer world and it’s what our “main.py” will use.</li>
+<li>model contains the actual deep learning code (we talk about tensorflow, pytorch etc)</li>
+<li>notebooks include all of our jupyter/colab notebooks in one place.</li>
+<li>ops: this one is not always needed, as it includes operations not related with machine learning such as algebraic transformations, image manipulation techniques or maybe graph operations.</li>
+<li>utils: utilities functions that are used in more than one places and everything that don’t fall in on the above come here.
+Now that we have our project well structured and all, we can begin to see how our code should look like on a lower level.</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="taocao/ml"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/ml/jupyter/2022/09/04/best-practices-ML-programming.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/ml/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/ml/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/ml/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/ml/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/ml/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
