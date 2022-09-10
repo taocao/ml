@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Testing Machine Learning and MLOps Code | fastpages</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Testing Machine Learning and MLOps Code" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A tutorial to provide samples of tests for the most common operations in MLOps/Machine Learning projects. Testing the code used for MLOps or Machine Learning projects follows the same principles of any other software project." />
+<meta property="og:description" content="A tutorial to provide samples of tests for the most common operations in MLOps/Machine Learning projects. Testing the code used for MLOps or Machine Learning projects follows the same principles of any other software project." />
+<link rel="canonical" href="https://taocao.github.io/ml/jupyter/2022/09/09/_09_10_testing-ml-and-mlops-code.html" />
+<meta property="og:url" content="https://taocao.github.io/ml/jupyter/2022/09/09/_09_10_testing-ml-and-mlops-code.html" />
+<meta property="og:site_name" content="fastpages" />
+<meta property="og:image" content="https://taocao.github.io/ml/images/chart-preview.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-09-09T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://taocao.github.io/ml/images/chart-preview.png" />
+<meta property="twitter:title" content="Testing Machine Learning and MLOps Code" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-09T00:00:00-05:00","datePublished":"2022-09-09T00:00:00-05:00","description":"A tutorial to provide samples of tests for the most common operations in MLOps/Machine Learning projects. Testing the code used for MLOps or Machine Learning projects follows the same principles of any other software project.","headline":"Testing Machine Learning and MLOps Code","image":"https://taocao.github.io/ml/images/chart-preview.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://taocao.github.io/ml/jupyter/2022/09/09/_09_10_testing-ml-and-mlops-code.html"},"url":"https://taocao.github.io/ml/jupyter/2022/09/09/_09_10_testing-ml-and-mlops-code.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/ml/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://taocao.github.io/ml/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/ml/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/ml/">fastpages</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/ml/about/">About Me</a><a class="page-link" href="/ml/search/">Search</a><a class="page-link" href="/ml/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Testing Machine Learning and MLOps Code</h1><p class="page-description">A tutorial to provide samples of tests for the most common operations in MLOps/Machine Learning projects. Testing the code used for MLOps or Machine Learning projects follows the same principles of any other software project.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-09-09T00:00:00-05:00" itemprop="datePublished">
+        Sep 9, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/ml/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/taocao/ml/tree/master/_notebooks/2022_09_10_testing-ml-and-mlops-code.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/ml/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/taocao/ml/master?filepath=_notebooks%2F2022_09_10_testing-ml-and-mlops-code.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/ml/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/taocao/ml/blob/master/_notebooks/2022_09_10_testing-ml-and-mlops-code.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/ml/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Ftaocao%2Fml%2Fblob%2Fmaster%2F_notebooks%2F2022_09_10_testing-ml-and-mlops-code.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/ml/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Distinguish-between-traditional-software-tests-and-machine-learning-(ML)-tests">Distinguish between traditional software tests and machine learning (ML) tests </a></li>
+<li class="toc-entry toc-h1"><a href="#Writing-Robust-Tests-for-Data-&-Machine-Learning-Pipelines">Writing Robust Tests for Data &amp; Machine Learning Pipelines </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022_09_10_testing-ml-and-mlops-code.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Distinguish-between-traditional-software-tests-and-machine-learning-(ML)-tests">
+<a class="anchor" href="#Distinguish-between-traditional-software-tests-and-machine-learning-(ML)-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distinguish between traditional software tests and machine learning (ML) tests<a class="anchor-link" href="#Distinguish-between-traditional-software-tests-and-machine-learning-(ML)-tests"> </a>
+</h1>
+<ul>
+<li>software tests check the written logic while ML tests check the learned logic.</li>
+<li>ML tests can be further split into testing and evaluation. </li>
+</ul>
+<p>We’re familiar with ML evaluation where we train a model and evaluate its performance on an unseen validation set; this is done via metrics (e.g., accuracy, Area under Curve of Receiver Operating Characteristic (AUC ROC)) and visuals (e.g., precision-recall curve).</p>
+<p>ML testing involves checks on model behaviour. Pre-train tests—which can be run without trained parameters—check if our written logic is correct. For example, is classification probability between 0 to 1? Post-train tests check if the learned logic is expected. For example, on the Titanic dataset, we should expect females to have a higher survival probability (relative to males).</p>
+<p>Taken together, here’s how the workflow might look like. To complement this, we’ll implement a machine learning model and run the following tests on it:</p>
+<ul>
+<li>Pre-train tests to ensure correct implementation</li>
+<li>Post-train tests to ensure expected learned behaviour</li>
+<li>Evaluation to ensure satisfactory model performance</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Writing-Robust-Tests-for-Data-&amp;-Machine-Learning-Pipelines">
+<a class="anchor" href="#Writing-Robust-Tests-for-Data-&amp;-Machine-Learning-Pipelines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing Robust Tests for Data &amp; Machine Learning Pipelines<a class="anchor-link" href="#Writing-Robust-Tests-for-Data-&amp;-Machine-Learning-Pipelines"> </a>
+</h1>
+<p>How data and machine learning pipelines are tested? Especially why some tests break more often than others. And it’s not because the new code is wrong; often, the new code is correct but the tests break anyway and need to be updated.</p>
+<p>Why certain tests break—incorrectly—more than others and try to find a better way to test pipelines. We’ll start with a simple pipeline and test it via unit, schema, and integration tests. Then, I’ll introduce new data and logic, observe how tests break, and draw patterns from it. Finally, I’ll suggest how to make pipeline testing less brittle.</p>
+<ul>
+<li>Overview of testing scopes: unit, integration, functional, etc.</li>
+</ul>
+<p>Smaller testing scopes = Shorter feedback loops</p>
+<ul>
+<li>An example pipeline: behavioral logs -&gt; batch inference output</li>
+<li>Writing tests for our pipeline: unit, schema, integration</li>
+<li>Adding new data (visible impressions) and logic to our pipeline</li>
+<li>The additive vs. retroactive impact of new data and logic on tests</li>
+<li>Related concepts: Test validity, granularity, and scope</li>
+<li>Suggestions for more robust pipeline tests</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="taocao/ml"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/ml/jupyter/2022/09/09/_09_10_testing-ml-and-mlops-code.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/ml/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/ml/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/ml/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>An easy to use blogging platform with support for Jupyter Notebooks.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" target="_blank" title="fastai"><svg class="svg-icon grey"><use xlink:href="/ml/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" target="_blank" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/ml/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
